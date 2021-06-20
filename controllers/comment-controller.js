@@ -43,7 +43,16 @@ const commentController = {
         res.json(dbPizzaData);
       })
       .catch(err => res.json(err));
+  },
+  //adding reply with validation
+  addReply({ params, body }, res) {
+    Comment.findOneAndUpdate(
+      { _id: params.commentId },
+      { $push: { replies: body } },
+      { new: true, runValidators: true }
+    )
   }
 };
+
 
 module.exports = commentController;
